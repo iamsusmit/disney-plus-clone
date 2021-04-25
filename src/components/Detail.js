@@ -23,6 +23,16 @@ const Detail = (props) => {
       });
   }, [id]);
 
+  useEffect(() => {
+    document.title = detailData.title
+      ? `Disney+ Clone | ${detailData.title}`
+      : "Disney+ Clone";
+  }, [detailData]);
+
+  const handleTrailer = () => {
+    window.open(`${detailData?.trailer}`, "_blank");
+  };
+
   return (
     <Container>
       <Background>
@@ -34,11 +44,11 @@ const Detail = (props) => {
       </ImageTitle>
       <ContentMeta>
         <Controls>
-          <Player>
+          <Player onClick={() => alert("Exclusive for Premier users only!")}>
             <img src="/images/play-icon-black.png" alt="" />
             <span>Play</span>
           </Player>
-          <Trailer>
+          <Trailer onClick={handleTrailer}>
             <img src="/images/play-icon-white.png" alt="" />
             <span>Trailer</span>
           </Trailer>
