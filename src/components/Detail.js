@@ -2,10 +2,19 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import db from "../firebase";
+import { message } from "antd";
+import "antd/dist/antd.css";
+import { useDispatch } from "react-redux";
+import {
+  setWatchlist,
+  removeWatchlist,
+} from "../features/watchlist/watchlistSlice";
 
 const Detail = (props) => {
   const { id } = useParams();
   const [detailData, setDetailData] = useState({});
+  const [list, setList] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     db.collection("movies")
@@ -33,6 +42,18 @@ const Detail = (props) => {
     window.open(`${detailData?.trailer}`, "_blank");
   };
 
+  const addToWatchlist = () => {
+    setList(true);
+    dispatch(setWatchlist());
+    message.success(`${detailData.title} is added to your watchlist`);
+  };
+
+  const removeFromWatchlist = () => {
+    setList(false);
+    dispatch(removeWatchlist());
+    message.error(`${detailData.title} is removed from your watchlist`);
+  };
+
   return (
     <Container>
       <Background>
@@ -52,10 +73,19 @@ const Detail = (props) => {
             <img src="/images/play-icon-white.png" alt="" />
             <span>Trailer</span>
           </Trailer>
-          <AddList>
-            <span />
-            <span />
-          </AddList>
+          {list == false ? (
+            <AddList onClick={() => addToWatchlist()}>
+              <span />
+              <span />
+            </AddList>
+          ) : (
+            <AddList
+              style={{ fontSize: "200%" }}
+              onClick={() => removeFromWatchlist()}
+            >
+              ✔
+            </AddList>
+          )}
           <GroupWatch>
             <div>
               <img src="/images/group-icon.png" alt="" />

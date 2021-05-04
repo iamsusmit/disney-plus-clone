@@ -9,12 +9,14 @@ import {
   setUserLoginDetails,
   setSignOutState,
 } from "../features/user/userSlice";
+import { currentWatchlist } from "../features/watchlist/watchlistSlice";
 
 const Header = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const userName = useSelector(selectUserName);
   const userPhoto = useSelector(selectUserPhoto);
+  const watchlistCount = useSelector(currentWatchlist);
 
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
@@ -77,7 +79,12 @@ const Header = (props) => {
             </a>
             <a>
               <img src="/images/watchlist-icon.svg" alt="WATCHLIST" />
-              <span>WATCHLIST</span>
+              <span>
+                WATCHLIST{" "}
+                {watchlistCount != 0 && (
+                  <sup style={{ fontSize: "100%" }}>{watchlistCount}</sup>
+                )}
+              </span>
             </a>
             <a>
               <img src="/images/original-icon.svg" alt="ORIGINALS" />
@@ -211,7 +218,7 @@ const Login = styled.a`
     background-color: #f9f9f9;
     color: #000;
     border-color: transparent;
-    cursor: pointer
+    cursor: pointer;
   }
 `;
 
