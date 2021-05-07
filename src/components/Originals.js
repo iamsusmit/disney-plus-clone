@@ -8,7 +8,9 @@ const Originals = (props) => {
 
   return (
     <Container>
-      <h4 style={{color:"white",fontSize:"150%"}}>Originals</h4>
+      {props.title && (
+        <h4 style={{ color: "white", fontSize: "150%" }}>Originals</h4>
+      )}
       <Content>
         {movies &&
           movies.map((movie, key) => (

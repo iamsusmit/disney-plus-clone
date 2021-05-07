@@ -22,7 +22,7 @@ const Header = (props) => {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
         setUser(user);
-        history.push("/home");
+        // history.push("/home");
       }
     });
   }, [userName]);
@@ -90,7 +90,7 @@ const Header = (props) => {
               <img src="/images/original-icon.svg" alt="ORIGINALS" />
               <span>ORIGINALS</span>
             </a>
-            <a>
+            <a href="/movies">
               <img src="/images/movie-icon.svg" alt="MOVIES" />
               <span>MOVIES</span>
             </a>
@@ -102,7 +102,9 @@ const Header = (props) => {
           <SignOut>
             <UserImg src={userPhoto} alt={userName} />
             <DropDown>
-              <span onClick={handleAuth} style={{color:"white"}}>Sign out</span>
+              <span onClick={handleAuth} style={{ color: "white" }}>
+                Sign out
+              </span>
             </DropDown>
           </SignOut>
         </>
@@ -198,11 +200,45 @@ const NavMenu = styled.div`
         opacity: 1 !important;
       }
     }
+    @media (max-width: 768px) {
+      justify-content: space-between;
+      flex: 100%;
+    }
   }
 
-  /* @media (max-width: 768px) {
-    display: none;
-  } */
+  // for first 3 elements
+  a:nth-child(-n + 3) {
+    @media (max-width: 768px) {
+      margin-right: auto;
+    }
+  }
+
+  // for all from 4th elements
+  a:nth-child(n + 4) {
+    @media (max-width: 768px) {
+      margin-right: -90px;
+      // margin-left:auto;
+    }
+  }
+
+  a:nth-child(4) {
+    @media (max-width: 768px) {
+      margin-top: -70px;
+      margin-right: -110px;
+    }
+  }
+  a:nth-child(6) {
+    @media (max-width: 768px) {
+      margin-right: -80px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    // display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 50%;
+  }
 `;
 
 const Login = styled.a`

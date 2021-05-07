@@ -1,26 +1,23 @@
+import React from "react";
 import styled from "styled-components";
-import ImgSlider from "./ImgSlider";
+import { useDispatch } from "react-redux";
+import db from "../firebase";
+import { setMovies } from "../features/movie/movieSlice";
+import { useEffect } from "react";
 import NewDisney from "./NewDisney";
 import Originals from "./Originals";
 import Recommends from "./Recommends";
 import Trending from "./Trending";
-import Viewers from "./Viewers";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import db from "../firebase";
-import { setMovies } from "../features/movie/movieSlice";
-import { selectUserName } from "../features/user/userSlice";
 
-const Home = (props) => {
+function Movies() {
   const dispatch = useDispatch();
-  const userName = useSelector(selectUserName);
   let recommends = [];
   let newDisneys = [];
   let originals = [];
   let trending = [];
 
   useEffect(() => {
-    document.title = 'Disney+ Clone';
+    document.title = "Disney+ Clone | Movies";
     db.collection("movies").onSnapshot((snapshot) => {
       snapshot.docs.map((doc) => {
         switch (doc.data().type) {
@@ -51,27 +48,24 @@ const Home = (props) => {
         })
       );
     });
-  }, [userName]);
+  }, []);
 
   return (
     <Container>
-      <ImgSlider />
-      <Viewers />
-      <Recommends title />
-      <NewDisney title />
-      <Originals title />
-      <Trending title />
+      <Trending />
+      <Originals />
+      <NewDisney />
+      <Recommends />
     </Container>
   );
-};
-
+}
 const Container = styled.main`
   position: relative;
   min-height: calc(100vh - 250px);
   overflow-x: hidden;
   display: block;
   top: 70px;
-  padding: 0 calc(3.5vw + 5px);
+  padding: 20px calc(3.5vw + 5px);
 
   &:after {
     background: url("/images/home-background.png") center center / cover
@@ -84,4 +78,4 @@ const Container = styled.main`
   }
 `;
 
-export default Home;
+export default Movies;

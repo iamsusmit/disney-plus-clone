@@ -8,7 +8,11 @@ const Recommends = (props) => {
 
   return (
     <Container>
-      <h4 style={{color:"white",fontSize:"150%"}}>Recommended for You</h4>
+      {props.title && (
+        <h4 style={{ color: "white", fontSize: "150%" }}>
+          Recommended for You
+        </h4>
+      )}
       <Content>
         {movies &&
           movies.map((movie, key) => (
