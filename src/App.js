@@ -5,6 +5,7 @@ import "./App.css";
 import Home from "./components/Home";
 import Detail from "./components/Detail";
 import Movies from "./components/Movies";
+import Search from "./components/Search";
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
           </Route>
           <Route path="/movies">
             <Movies />
+          </Route>
+          <Route path="/search">
+            <Search />
           </Route>
           <Route path="/detail/:id">
             <Detail />
