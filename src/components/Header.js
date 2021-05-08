@@ -33,6 +33,7 @@ const Header = (props) => {
         .signInWithPopup(provider)
         .then((result) => {
           setUser(result.user);
+          history.push("/home");
         })
         .catch((error) => {
           alert(error.message);
@@ -229,7 +230,7 @@ const NavMenu = styled.div`
   }
   a:nth-child(6) {
     @media (max-width: 768px) {
-      margin-right: -80px;
+      margin-right: -82px;
     }
   }
 
