@@ -44,6 +44,7 @@ const Header = (props) => {
         .then(() => {
           dispatch(setSignOutState());
           history.push("/");
+          sessionStorage.clear();
         })
         .catch((err) => alert(err.message));
     }
@@ -78,7 +79,7 @@ const Header = (props) => {
               <img src="/images/search-icon.svg" alt="SEARCH" />
               <span>SEARCH</span>
             </a>
-            <a>
+            <a href="/watchlist">
               <img src="/images/watchlist-icon.svg" alt="WATCHLIST" />
               <span>
                 WATCHLIST{" "}

@@ -46,6 +46,10 @@ const Detail = (props) => {
     setList(true);
     dispatch(setWatchlist());
     message.success(`${detailData.title} is added to your watchlist`);
+    var temp = sessionStorage.getItem("movieList");
+    temp != null
+      ? sessionStorage.setItem("movieList", `${temp}+${detailData.title}`)
+      : sessionStorage.setItem("movieList", detailData.title);
   };
 
   const removeFromWatchlist = () => {

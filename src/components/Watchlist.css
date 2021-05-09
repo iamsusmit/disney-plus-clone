@@ -1,0 +1,21 @@
+.ant-result,
+.ant-result-403,
+.error {
+  margin-left: 32.5vw;
+}
+
+.ant-result-title {
+  margin-left: 8vw;
+}
+/* to make the title in one line */
+.ant-result-subtitle {
+  clear: both;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-left: 3vw;
+}
+
+.watchlist__button {
+  margin-left: 6vw;
+}

@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import Detail from "./components/Detail";
 import Movies from "./components/Movies";
 import Search from "./components/Search";
+import Watchlist from "./components/Watchlist";
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
           </Route>
           <Route path="/search">
             <Search />
+          </Route>
+          <Route path="/watchlist">
+            <Watchlist />
           </Route>
           <Route path="/detail/:id">
             <Detail />
