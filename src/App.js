@@ -7,6 +7,8 @@ import Detail from "./components/Detail";
 import Movies from "./components/Movies";
 import Search from "./components/Search";
 import Watchlist from "./components/Watchlist";
+import OriginalsPage from "./components/OriginalsPage";
+import Series from "./components/Series";
 
 function App() {
   return (
@@ -28,6 +30,12 @@ function App() {
           </Route>
           <Route path="/watchlist">
             <Watchlist />
+          </Route>
+          <Route path="/originals">
+            <OriginalsPage />
+          </Route>
+          <Route path="/series">
+            <Series />
           </Route>
           <Route path="/detail/:id">
             <Detail />

@@ -9,10 +9,13 @@ import {
   setWatchlist,
   removeWatchlist,
 } from "../features/watchlist/watchlistSlice";
+import { Popover, Button } from "antd";
+import "antd/dist/antd.css";
 
 const Detail = (props) => {
   const { id } = useParams();
   const [detailData, setDetailData] = useState({});
+  const [isVisible, setIsVisible] = useState(false);
   const [list, setList] = useState(false);
   const dispatch = useDispatch();
 
@@ -90,11 +93,19 @@ const Detail = (props) => {
               ✔
             </AddList>
           )}
-          <GroupWatch>
-            <div>
-              <img src="/images/group-icon.png" alt="" />
-            </div>
-          </GroupWatch>
+          <Popover
+            content={
+              <p style={{ color: "blue" }}>Available for VIP subscribers</p>
+            }
+            title="Group Watch"
+            trigger="click"
+          >
+            <GroupWatch>
+              <div>
+                <img src="/images/group-icon.png" alt="" />
+              </div>
+            </GroupWatch>
+          </Popover>
         </Controls>
         <SubTitle>{detailData.subTitle}</SubTitle>
         <Description>{detailData.description}</Description>

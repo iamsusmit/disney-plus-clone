@@ -88,7 +88,7 @@ const Header = (props) => {
                 )}
               </span>
             </a>
-            <a>
+            <a href="/originals">
               <img src="/images/original-icon.svg" alt="ORIGINALS" />
               <span>ORIGINALS</span>
             </a>
@@ -96,7 +96,7 @@ const Header = (props) => {
               <img src="/images/movie-icon.svg" alt="MOVIES" />
               <span>MOVIES</span>
             </a>
-            <a>
+            <a href="/series">
               <img src="/images/series-icon.svg" alt="SERIES" />
               <span>SERIES</span>
             </a>
