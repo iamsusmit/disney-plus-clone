@@ -15,7 +15,7 @@ import "antd/dist/antd.css";
 const Detail = (props) => {
   const { id } = useParams();
   const [detailData, setDetailData] = useState({});
-  const [isVisible, setIsVisible] = useState(false);
+  const [isPresent, setIsPresent] = useState(false);
   const [list, setList] = useState(false);
   const dispatch = useDispatch();
 
@@ -41,24 +41,42 @@ const Detail = (props) => {
       : "Disney+ Clone";
   }, [detailData]);
 
+  useEffect(() => {
+    let temp = sessionStorage.getItem("movieList");
+    let res = temp?.split("+");
+    res?.includes(detailData?.title) && setIsPresent(true);
+  }, [detailData]);
+
   const handleTrailer = () => {
     window.open(`${detailData?.trailer}`, "_blank");
   };
 
   const addToWatchlist = () => {
-    setList(true);
-    dispatch(setWatchlist());
-    message.success(`${detailData.title} is added to your watchlist`);
-    var temp = sessionStorage.getItem("movieList");
-    temp != null
-      ? sessionStorage.setItem("movieList", `${temp}+${detailData.title}`)
-      : sessionStorage.setItem("movieList", detailData.title);
+    if (isPresent) {
+      message.warning(
+        `${detailData.title} is already present in your watchlist`
+      );
+    } else {
+      setList(true);
+      dispatch(setWatchlist()); //for showing realtime watchlist count in header
+      message.success(`${detailData.title} is added to your watchlist`);
+      var temp = sessionStorage.getItem("movieList");
+      temp != null
+        ? sessionStorage.setItem("movieList", `${temp}+${detailData.title}`)
+        : sessionStorage.setItem("movieList", detailData.title);
+    }
   };
 
   const removeFromWatchlist = () => {
     setList(false);
-    dispatch(removeWatchlist());
+    dispatch(removeWatchlist()); //for showing realtime watchlist count in header
     message.error(`${detailData.title} is removed from your watchlist`);
+    var temp = sessionStorage.getItem("movieList");
+    let res = temp?.split("+");
+    const updatedList = res?.filter((movie) => {
+      return movie.toLowerCase() != detailData.title.toLowerCase() && movie;
+    });
+    sessionStorage.setItem("movieList", `${updatedList.join("+")}`);
   };
 
   return (

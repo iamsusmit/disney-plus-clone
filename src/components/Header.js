@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -9,14 +9,15 @@ import {
   setUserLoginDetails,
   setSignOutState,
 } from "../features/user/userSlice";
-import { currentWatchlist } from "../features/watchlist/watchlistSlice";
+import { currentWatchlistStatus } from "../features/watchlist/watchlistSlice";
 
 const Header = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const userName = useSelector(selectUserName);
   const userPhoto = useSelector(selectUserPhoto);
-  const watchlistCount = useSelector(currentWatchlist);
+  const [watchlistCount, setWatchlistCount] = useState(0);
+  const status = useSelector(currentWatchlistStatus); //for showing realtime watchlist count in header
 
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
@@ -26,6 +27,12 @@ const Header = (props) => {
       }
     });
   }, [userName]);
+
+  useEffect(() => {
+    let temp = sessionStorage.getItem("movieList");
+    let res = temp?.split("+");
+    res && setWatchlistCount(res?.length);
+  }, [status]);
 
   const handleAuth = () => {
     if (!userName) {

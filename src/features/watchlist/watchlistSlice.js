@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  watchlist: 0,
+  watchlist: Boolean,
 };
 
 const watchlistSlice = createSlice({
@@ -9,17 +9,17 @@ const watchlistSlice = createSlice({
   initialState,
   reducers: {
     setWatchlist: (state) => {
-      state.watchlist = state.watchlist + 1;
+      state.watchlist = true;
     },
 
     removeWatchlist: (state) => {
-      state.watchlist = state.watchlist - 1;
+      state.watchlist = false;
     },
   },
 });
 
 export const { setWatchlist, removeWatchlist } = watchlistSlice.actions;
 
-export const currentWatchlist = (state) => state?.watch?.watchlist;
+export const currentWatchlistStatus = (state) => state?.watch?.watchlist;
 
 export default watchlistSlice.reducer;
