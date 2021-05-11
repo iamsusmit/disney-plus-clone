@@ -33,8 +33,9 @@ const Watchlist = (props) => {
 
   useEffect(() => {
     var temp = sessionStorage.getItem("movieList");
-    console.log(temp?.split("+"))
-    const newMovies = temp?.split("+").map((item) =>
+    let res = temp?.split("+");
+    let unique = [...new Set(res)]; //removes the duplicate value
+    const newMovies = unique.map((item) =>
       movies?.filter((movie) => {
         return movie.title.toLowerCase() == item.toLowerCase() && movie;
       })
