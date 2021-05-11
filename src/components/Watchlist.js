@@ -33,6 +33,7 @@ const Watchlist = (props) => {
 
   useEffect(() => {
     var temp = sessionStorage.getItem("movieList");
+    console.log(temp?.split("+"))
     const newMovies = temp?.split("+").map((item) =>
       movies?.filter((movie) => {
         return movie.title.toLowerCase() == item.toLowerCase() && movie;

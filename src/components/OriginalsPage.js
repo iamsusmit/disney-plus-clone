@@ -3,13 +3,15 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import db from "../firebase";
 import { setMovies } from "../features/movie/movieSlice";
-import { useState, useEffect } from "react";
-import Originals from "./Originals";
+import { lazy, Suspense, useState, useEffect } from "react";
+import { Spin } from "antd";
+import "antd/dist/antd.css";
 import "./OriginalsPage.css";
 
 import { Result, Statistic, Row, Col } from "antd";
 import { SmileOutlined } from "@ant-design/icons";
-import "antd/dist/antd.css";
+
+const Originals = lazy(() => import("./Originals"));
 const { Countdown } = Statistic;
 const deadline = Date.now() + 1000 * 60 * 60 * 12 + 1000 * 30; // Moment is also OK
 
@@ -43,7 +45,15 @@ function OriginalsPage() {
 
   return (
     <Container>
-      <Originals />
+      <Suspense
+        fallback={
+          <Loading>
+            <Spin size="large" tip="Loading..." />
+          </Loading>
+        }
+      >
+        <Originals />
+      </Suspense>
       {hasCountdown && (
         <>
           <Row style={{ marginTop: "10vh", marginLeft: "27.5vw" }} gutter={16}>
@@ -76,6 +86,15 @@ const Container = styled.main`
     inset: 0px;
     opacity: 1;
     z-index: -1;
+  }
+`;
+const Loading = styled.div`
+margin: 200px 0 0 0;
+margin-bottom: 20px;
+padding: 30px 50px;
+text-align: center;
+/* background: rgba(0, 0, 0, 0.05); */
+border-radius: 4px;
   }
 `;
 

@@ -3,11 +3,14 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import db from "../firebase";
 import { setMovies } from "../features/movie/movieSlice";
-import { useEffect } from "react";
-import NewDisney from "./NewDisney";
-import Originals from "./Originals";
-import Recommends from "./Recommends";
-import Trending from "./Trending";
+import { lazy, Suspense, useEffect } from "react";
+import { Spin } from "antd";
+import "antd/dist/antd.css";
+
+const NewDisney = lazy(() => import("./NewDisney"));
+const Originals = lazy(() => import("./Originals"));
+const Recommends = lazy(() => import("./Recommends"));
+const Trending = lazy(() => import("./Trending"));
 
 function Movies() {
   const dispatch = useDispatch();
@@ -52,16 +55,24 @@ function Movies() {
 
   return (
     <Container>
-      <Trending />
-      <Originals />
-      <NewDisney />
-      <Recommends />
+      <Suspense
+        fallback={
+          <Loading>
+            <Spin size="large" tip="Loading..." />
+          </Loading>
+        }
+      >
+        <Trending />
+        <Originals />
+        <NewDisney />
+        <Recommends />
+      </Suspense>
     </Container>
   );
 }
 const Container = styled.main`
   position: relative;
-  min-height: calc(100vh - 250px);
+  min-height: calc(130vh - 250px);
   overflow-x: hidden;
   display: block;
   top: 70px;
@@ -75,6 +86,15 @@ const Container = styled.main`
     inset: 0px;
     opacity: 1;
     z-index: -1;
+  }
+`;
+const Loading = styled.div`
+margin: 200px 0;
+margin-bottom: 20px;
+padding: 30px 50px;
+text-align: center;
+/* background: rgba(0, 0, 0, 0.05); */
+border-radius: 4px;
   }
 `;
 
