@@ -4,16 +4,23 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectAll } from "../features/movie/movieSlice";
 import db from "../firebase";
 import { setMovies } from "../features/movie/movieSlice";
+import {
+  currentWatchlistStatus,
+  removeWatchlist,
+  setToggleValue,
+} from "../features/watchlist/watchlistSlice";
 import { useState, useEffect } from "react";
-import { Result, Button } from "antd";
+import { Result, Button, Popover, message } from "antd";
 import "antd/dist/antd.css";
 // import "./Watchlist.css";
 
 const Watchlist = (props) => {
   const movies = useSelector(selectAll);
+  const status = useSelector(currentWatchlistStatus);
   const dispatch = useDispatch();
   const [filteredMovies, setFilteredMovies] = useState([]);
-  const [isMoviePresent, setIsMoviePresent] = useState(false);
+  const [tracker, setTracker] = useState();
+  const [content, setContent] = useState();
   let all = [];
 
   useEffect(() => {
@@ -42,7 +49,26 @@ const Watchlist = (props) => {
     );
 
     newMovies && setFilteredMovies(newMovies);
-  }, [movies]);
+  }, [movies, status, tracker]); //entire watchlist will be re-rendered when status/tracker gets changed i.e. when removeItem is called
+
+  const removeItem = (e) => {
+    var targetValue = e.target.attributes.value.value;
+    message.error(`${targetValue} is removed from your watchlist`);
+    var temp = sessionStorage.getItem("movieList");
+    let res = temp?.split("+");
+    setContent(res?.length);
+    const updatedList = res?.filter((movie) => {
+      return movie.toLowerCase() != targetValue.toLowerCase() && movie;
+    });
+    sessionStorage.setItem("movieList", `${updatedList.join("+")}`);
+    dispatch(removeWatchlist()); //for showing realtime watchlist count in header
+    setTracker(Math.floor(Math.random() * 10));
+    dispatch(
+      setToggleValue({
+        toggle: Math.floor(Math.random() * 10),
+      })
+    );
+  };
 
   return (
     <Container>
@@ -50,15 +76,25 @@ const Watchlist = (props) => {
         {filteredMovies.length > 0 ? (
           filteredMovies.map((item) =>
             item?.map((movie, key) => (
-              <Wrap key={key}>
-                {movie.id}
-                <Link to={`/detail/` + movie.id}>
-                  <img src={movie.cardImg} alt={movie.title} />
-                </Link>
-              </Wrap>
+              <Popover
+                content={
+                  <a onClick={removeItem} value={movie.title}>
+                    Remove
+                  </a>
+                }
+                title="Want to remove from watchlist ?"
+                trigger="hover"
+              >
+                <Wrap key={key}>
+                  {movie.id}
+                  <Link to={`/detail/` + movie.id}>
+                    <img src={movie.cardImg} alt={movie.title} />
+                  </Link>
+                </Wrap>
+              </Popover>
             ))
           )
-        ) : (
+        ) : filteredMovies.length <= 0 || content == 1 ? (
           <Result
             className="error"
             status="403"
@@ -70,7 +106,7 @@ const Watchlist = (props) => {
               </Button>
             }
           />
-        )}
+        ) : null}
       </Content>
     </Container>
   );

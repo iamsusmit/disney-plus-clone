@@ -9,7 +9,10 @@ import {
   setUserLoginDetails,
   setSignOutState,
 } from "../features/user/userSlice";
-import { currentWatchlistStatus } from "../features/watchlist/watchlistSlice";
+import {
+  currentWatchlistStatus,
+  tValue,
+} from "../features/watchlist/watchlistSlice";
 
 const Header = (props) => {
   const dispatch = useDispatch();
@@ -18,7 +21,7 @@ const Header = (props) => {
   const userPhoto = useSelector(selectUserPhoto);
   const [watchlistCount, setWatchlistCount] = useState(0);
   const status = useSelector(currentWatchlistStatus); //for showing realtime watchlist count in header
-
+  const toggle = useSelector(tValue);
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -31,8 +34,8 @@ const Header = (props) => {
   useEffect(() => {
     let temp = sessionStorage.getItem("movieList");
     let res = temp?.split("+");
-    res && setWatchlistCount(res?.length);
-  }, [status]);
+    res != "" ? setWatchlistCount(res?.length) : setWatchlistCount(0);
+  }, [status, toggle]);
 
   const handleAuth = () => {
     if (!userName) {
