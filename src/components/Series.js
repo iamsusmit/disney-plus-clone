@@ -25,7 +25,7 @@ function Series() {
 }
 const Container = styled.main`
   position: relative;
-  min-height: calc(100vh - 250px);
+  min-height: calc(130vh - 250px);
   overflow-x: hidden;
   display: block;
   top: 70px;
