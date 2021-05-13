@@ -68,6 +68,14 @@ const Watchlist = (props) => {
         toggle: Math.floor(Math.random() * 10),
       })
     );
+    if (res?.length == 1) {
+      sessionStorage.clear();
+    }
+  };
+
+  const removeAll = () => {
+    sessionStorage.clear();
+    window.location.reload();
   };
 
   return (
@@ -78,9 +86,13 @@ const Watchlist = (props) => {
             item?.map((movie, key) => (
               <Popover
                 content={
-                  <a onClick={removeItem} value={movie.title}>
+                  <strong
+                    style={{ color: "blue", cursor: "pointer" }}
+                    onClick={removeItem}
+                    value={movie.title}
+                  >
                     Remove
-                  </a>
+                  </strong>
                 }
                 title="Want to remove from watchlist ?"
                 trigger="hover"
@@ -107,6 +119,21 @@ const Watchlist = (props) => {
             }
           />
         ) : null}
+        {filteredMovies.length > 0 && (
+          <Button
+            onClick={removeAll}
+            style={{
+              width: "fit-content",
+              marginTop: "auto",
+              marginBottom: "auto",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+            type="primary"
+          >
+            Remove All
+          </Button>
+        )}
       </Content>
     </Container>
   );
