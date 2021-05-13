@@ -21,6 +21,7 @@ const Watchlist = (props) => {
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [tracker, setTracker] = useState();
   const [content, setContent] = useState();
+  const [showRemoveAll, setShowRemoveAll] = useState(false);
   let all = [];
 
   useEffect(() => {
@@ -50,6 +51,11 @@ const Watchlist = (props) => {
 
     newMovies && setFilteredMovies(newMovies);
   }, [movies, status, tracker]); //entire watchlist will be re-rendered when status/tracker gets changed i.e. when removeItem is called
+
+  //delay in showing remove all button
+  useEffect(() => {
+    setTimeout(() => setShowRemoveAll(true), 5000);
+  }, []);
 
   const removeItem = (e) => {
     var targetValue = e.target.attributes.value.value;
@@ -119,7 +125,7 @@ const Watchlist = (props) => {
             }
           />
         ) : null}
-        {filteredMovies.length > 0 && (
+        {filteredMovies.length > 0 && showRemoveAll && (
           <Button
             onClick={removeAll}
             style={{

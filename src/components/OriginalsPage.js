@@ -17,6 +17,7 @@ const deadline = Date.now() + 1000 * 60 * 60 * 12 + 1000 * 30; // Moment is also
 
 function OriginalsPage() {
   const [hasCountdown, setHasCountdown] = useState(true);
+  const [showCountdown, setShowCountdown] = useState(false);
   const dispatch = useDispatch();
   let originals = [];
 
@@ -37,6 +38,9 @@ function OriginalsPage() {
         })
       );
     });
+
+    //delay in showing countdown
+    setTimeout(() => setShowCountdown(true), 5000);
   }, []);
 
   function onFinish() {
@@ -54,7 +58,7 @@ function OriginalsPage() {
       >
         <Originals />
       </Suspense>
-      {hasCountdown && (
+      {hasCountdown && showCountdown && (
         <>
           <Row style={{ marginTop: "10vh", marginLeft: "27.5vw" }} gutter={16}>
             <h4 style={{ color: "white", fontSize: "150%" }}>
