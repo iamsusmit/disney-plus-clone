@@ -12,6 +12,8 @@ import {
 import {
   currentWatchlistStatus,
   tValue,
+  currentBackButtonValue,
+  currentWatchlistValue,
 } from "../features/watchlist/watchlistSlice";
 
 const Header = (props) => {
@@ -22,6 +24,9 @@ const Header = (props) => {
   const [watchlistCount, setWatchlistCount] = useState(0);
   const status = useSelector(currentWatchlistStatus); //for showing realtime watchlist count in header
   const toggle = useSelector(tValue);
+  const backButtonStatus = useSelector(currentBackButtonValue);
+  const currentWlValue = useSelector(currentWatchlistValue); //for reflecting the realtime watchlist value while going back from the browser
+
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -35,7 +40,7 @@ const Header = (props) => {
     let temp = sessionStorage.getItem("movieList");
     let res = temp?.split("+");
     res != "" ? setWatchlistCount(res?.length) : setWatchlistCount(0);
-  }, [status, toggle]);
+  }, [currentWlValue, backButtonStatus, status, toggle]);
 
   const handleAuth = () => {
     if (!userName) {

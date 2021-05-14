@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 import {
   setWatchlist,
   removeWatchlist,
+  setBackButtonValue,
+  setWatchlistValue,
 } from "../features/watchlist/watchlistSlice";
 import { Popover, Button } from "antd";
 import "antd/dist/antd.css";
@@ -47,6 +49,17 @@ const Detail = (props) => {
     res?.includes(detailData?.title) && setIsPresent(true);
   }, [detailData]);
 
+  //do something when going back from browser
+  useEffect(() => {
+    window.onpopstate = () => {
+      dispatch(
+        setBackButtonValue({
+          backButtonValue: Math.floor(Math.random() * 10),
+        })
+      );
+    };
+  }, []);
+
   const handleTrailer = () => {
     window.open(`${detailData?.trailer}`, "_blank");
   };
@@ -59,6 +72,11 @@ const Detail = (props) => {
     } else {
       setList(true);
       dispatch(setWatchlist()); //for showing realtime watchlist count in header
+      dispatch(
+        setWatchlistValue({
+          watchlistValue: Math.floor(Math.random() * 10),
+        })
+      );
       message.success(`${detailData.title} is added to your watchlist`);
       var temp = sessionStorage.getItem("movieList");
       temp != null
