@@ -90,11 +90,15 @@ const Detail = (props) => {
     dispatch(removeWatchlist()); //for showing realtime watchlist count in header
     message.error(`${detailData.title} is removed from your watchlist`);
     var temp = sessionStorage.getItem("movieList");
-    let res = temp?.split("+");
-    const updatedList = res?.filter((movie) => {
-      return movie.toLowerCase() != detailData.title.toLowerCase() && movie;
-    });
-    sessionStorage.setItem("movieList", `${updatedList.join("+")}`);
+    var res = temp?.split("+");
+    if (res?.length == 1) {
+      sessionStorage.clear();
+    } else {
+      const updatedList = res?.filter((movie) => {
+        return movie.toLowerCase() != detailData.title.toLowerCase() && movie;
+      });
+      sessionStorage.setItem("movieList", `${updatedList.join("+")}`);
+    }
   };
 
   return (

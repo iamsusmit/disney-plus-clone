@@ -10,7 +10,7 @@ import {
   setToggleValue,
 } from "../features/watchlist/watchlistSlice";
 import { useState, useEffect } from "react";
-import { Result, Button, Popover, message } from "antd";
+import { Result, Button, Popover, message, Alert } from "antd";
 import "antd/dist/antd.css";
 // import "./Watchlist.css";
 
@@ -54,7 +54,7 @@ const Watchlist = (props) => {
 
   //delay in showing remove all button
   useEffect(() => {
-    setTimeout(() => setShowRemoveAll(true), 5000);
+    setTimeout(() => setShowRemoveAll(true), 4000);
   }, []);
 
   const removeItem = (e) => {
@@ -86,6 +86,17 @@ const Watchlist = (props) => {
 
   return (
     <Container>
+      {filteredMovies.length > 0 && (
+        <Alert
+          message="Tips"
+          description="Hold or Hover over each movie to remove the particular one."
+          type="success"
+          style={{ marginBottom: "5vh" }}
+          afterClose={() => message.success(`Happy Watching 🎬`)}
+          showIcon
+          closable
+        />
+      )}
       <Content>
         {filteredMovies.length > 0 ? (
           filteredMovies.map((item) =>

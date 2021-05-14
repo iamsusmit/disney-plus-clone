@@ -40,7 +40,7 @@ function OriginalsPage() {
     });
 
     //delay in showing countdown
-    setTimeout(() => setShowCountdown(true), 5000);
+    setTimeout(() => setShowCountdown(true), 4000);
   }, []);
 
   function onFinish() {
