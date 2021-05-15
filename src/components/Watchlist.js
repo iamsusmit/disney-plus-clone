@@ -8,6 +8,7 @@ import {
   currentWatchlistStatus,
   removeWatchlist,
   setToggleValue,
+  setWatchlistValue,
 } from "../features/watchlist/watchlistSlice";
 import { useState, useEffect } from "react";
 import { Result, Button, Popover, message, Alert } from "antd";
@@ -22,6 +23,7 @@ const Watchlist = (props) => {
   const [tracker, setTracker] = useState();
   const [content, setContent] = useState();
   const [showRemoveAll, setShowRemoveAll] = useState(false);
+  const [isRemoved, setIsRemoved] = useState(false);
   let all = [];
 
   useEffect(() => {
@@ -50,11 +52,11 @@ const Watchlist = (props) => {
     );
 
     newMovies && setFilteredMovies(newMovies);
-  }, [movies, status, tracker]); //entire watchlist will be re-rendered when status/tracker gets changed i.e. when removeItem is called
+  }, [movies, status, tracker, isRemoved]); //entire watchlist will be re-rendered when status/tracker gets changed i.e. when removeItem is called
 
   //delay in showing remove all button
   useEffect(() => {
-    setTimeout(() => setShowRemoveAll(true), 4000);
+    setTimeout(() => setShowRemoveAll(true), 3000);
   }, []);
 
   const removeItem = (e) => {
@@ -81,7 +83,13 @@ const Watchlist = (props) => {
 
   const removeAll = () => {
     sessionStorage.clear();
-    window.location.reload();
+    setIsRemoved(true);
+    dispatch(
+      setWatchlistValue({
+        watchlistValue: Math.floor(Math.random() * 10),
+      })
+    ); //realtime watchlist count update in header
+    // window.location.reload();
   };
 
   return (

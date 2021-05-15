@@ -12,7 +12,7 @@ import "./Search.css";
 
 const { Search } = Input;
 
-const SearchMovies = (props) => {
+const SearchMovies = (props) git => {
   const movies = useSelector(selectAll);
   const dispatch = useDispatch();
   const [filteredMovies, setFilteredMovies] = useState([]);
@@ -20,12 +20,18 @@ const SearchMovies = (props) => {
 
   let all = [];
 
+  const handleChange = (e) => {
+    e.target.value == "" && setIsMoviePresent(false); //do not display the fallback while clearing the input value
+  };
+
   const onSearch = (value) => {
     const newMovies = movies.filter((movie) => {
       return movie.title.toLowerCase() == value.toLowerCase() && movie;
     });
     newMovies && setFilteredMovies(newMovies);
     document.title = "Disney+ Clone | Search";
+    console.log("newMovies.length", newMovies.length);
+
     if (newMovies.length === 0 && value != "") {
       //only show the fallback UI if search doesn't match but it will not be shown while page loading OR typed search has been removed
       setIsMoviePresent(true);
@@ -57,6 +63,7 @@ const SearchMovies = (props) => {
           enterButton="Search"
           size="large"
           onSearch={onSearch}
+          onChange={handleChange}
           style={{
             minWidth: "68.5vw",
             paddingLeft: "20vw",
