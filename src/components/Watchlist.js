@@ -56,7 +56,7 @@ const Watchlist = (props) => {
 
   //delay in showing remove all button
   useEffect(() => {
-    setTimeout(() => setShowRemoveAll(true), 3000);
+    setTimeout(() => setShowRemoveAll(true), 4000);
   }, []);
 
   const removeItem = (e) => {

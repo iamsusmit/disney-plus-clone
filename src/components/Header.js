@@ -225,16 +225,34 @@ const NavMenu = styled.div`
 
   // for first 3 elements
   a:nth-child(-n + 3) {
-    @media (max-width: 768px) {
+    @media (max-width: 600px) {
+      margin-left: -30vw;
+    }
+    @media (min-width: 601px) and (max-width: 768px) {
       margin-right: auto;
     }
   }
 
   // for all from 4th elements
   a:nth-child(n + 4) {
-    @media (max-width: 768px) {
+    @media (min-width: 601px) and (max-width: 768px) {
       margin-right: -90px;
       // margin-left:auto;
+    }
+    @media (max-width: 600px) {
+      margin-left: -5vw;
+    }
+  }
+
+  a:nth-child(1) {
+    @media (max-width: 600px) {
+      margin-left: -38vw;
+    }
+  }
+
+  a:nth-child(2) {
+    @media (max-width: 600px) {
+      margin-left: -35vw;
     }
   }
 
@@ -242,6 +260,11 @@ const NavMenu = styled.div`
     @media (max-width: 768px) {
       margin-top: -70px;
       margin-right: -110px;
+    }
+  }
+  a:nth-child(5) {
+    @media (max-width: 600px) {
+      margin-left: 18vw;
     }
   }
   a:nth-child(6) {
