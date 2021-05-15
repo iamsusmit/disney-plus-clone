@@ -137,6 +137,7 @@ const Watchlist = (props) => {
             status="403"
             title="403"
             subTitle="Sorry, your watchlist is empty."
+            style={{ paddingLeft: "35vw", margin: "auto" }}
             extra={
               <Button className="watchlist__button" href="/home" type="primary">
                 Back Home

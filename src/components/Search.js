@@ -12,7 +12,7 @@ import "./Search.css";
 
 const { Search } = Input;
 
-const SearchMovies = (props) git => {
+const SearchMovies = (props) => {
   const movies = useSelector(selectAll);
   const dispatch = useDispatch();
   const [filteredMovies, setFilteredMovies] = useState([]);
@@ -25,7 +25,7 @@ const SearchMovies = (props) git => {
   };
 
   const onSearch = (value) => {
-    const newMovies = movies.filter((movie) => {
+    const newMovies = movies?.filter((movie) => {
       return movie.title.toLowerCase() == value.toLowerCase() && movie;
     });
     newMovies && setFilteredMovies(newMovies);

@@ -25,11 +25,11 @@ function Series() {
 }
 const Container = styled.main`
   position: relative;
-  min-height: calc(130vh - 250px);
+  min-height: calc(140vh - 250px);
   overflow-x: hidden;
   display: block;
   top: 70px;
-  padding: 20px calc(3.5vw + 5px);
+  padding: 30px calc(3.5vw + 5px);
 
   &:after {
     background: url("/images/home-background.png") center center / cover
