@@ -7,6 +7,7 @@ import { setMovies } from "../features/movie/movieSlice";
 import { useState, useEffect } from "react";
 import { Result, Button } from "antd";
 import { Input, Space } from "antd";
+import Zoom from "react-reveal/Zoom";
 import "antd/dist/antd.css";
 import "./Search.css";
 
@@ -75,25 +76,29 @@ const SearchMovies = (props) => {
       <Content>
         {filteredMovies.length != 0 ? (
           filteredMovies?.map((movie, key) => (
-            <Wrap key={key}>
-              {movie.id}
-              <Link to={`/detail/` + movie.id}>
-                <img src={movie.cardImg} alt={movie.title} />
-              </Link>
-            </Wrap>
+            <Zoom bottom cascade>
+              <Wrap key={key}>
+                {movie.id}
+                <Link to={`/detail/` + movie.id}>
+                  <img src={movie.cardImg} alt={movie.title} />
+                </Link>
+              </Wrap>
+            </Zoom>
           ))
         ) : isMoviePresent ? (
-          <Result
-            className="error"
-            status="404"
-            title="404"
-            subTitle="Sorry, the movie you are trying to search does not exist."
-            extra={
-              <Button href="/home" type="primary">
-                Back Home
-              </Button>
-            }
-          />
+          <Zoom bottom cascade>
+            <Result
+              className="error"
+              status="404"
+              title="404"
+              subTitle="Sorry, the movie you are trying to search does not exist."
+              extra={
+                <Button href="/home" type="primary">
+                  Back Home
+                </Button>
+              }
+            />
+          </Zoom>
         ) : null}
       </Content>
     </Container>

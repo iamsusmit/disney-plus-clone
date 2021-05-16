@@ -13,6 +13,7 @@ import {
 import { useState, useEffect } from "react";
 import { Result, Button, Popover, message, Alert } from "antd";
 import "antd/dist/antd.css";
+import Zoom from "react-reveal/Zoom";
 // import "./Watchlist.css";
 
 const Watchlist = (props) => {
@@ -56,7 +57,7 @@ const Watchlist = (props) => {
 
   //delay in showing remove all button
   useEffect(() => {
-    setTimeout(() => setShowRemoveAll(true), 4000);
+    setTimeout(() => setShowRemoveAll(true), 5000);
   }, []);
 
   const removeItem = (e) => {
@@ -122,12 +123,14 @@ const Watchlist = (props) => {
                 title="Want to remove from watchlist ?"
                 trigger="hover"
               >
-                <Wrap key={key}>
-                  {movie.id}
-                  <Link to={`/detail/` + movie.id}>
-                    <img src={movie.cardImg} alt={movie.title} />
-                  </Link>
-                </Wrap>
+                <Zoom bottom cascade>
+                  <Wrap key={key}>
+                    {movie.id}
+                    <Link to={`/detail/` + movie.id}>
+                      <img src={movie.cardImg} alt={movie.title} />
+                    </Link>
+                  </Wrap>
+                </Zoom>
               </Popover>
             ))
           )

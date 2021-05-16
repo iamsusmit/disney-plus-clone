@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectOriginal } from "../features/movie/movieSlice";
+import Zoom from "react-reveal/Zoom";
+import LightSpeed from "react-reveal/LightSpeed";
 
 const Originals = (props) => {
   const movies = useSelector(selectOriginal);
@@ -9,17 +11,21 @@ const Originals = (props) => {
   return (
     <Container>
       {props.title && (
-        <h4 style={{ color: "white", fontSize: "150%" }}>Originals</h4>
+        <LightSpeed left cascade>
+          <h4 style={{ color: "white", fontSize: "150%" }}>Originals</h4>
+        </LightSpeed>
       )}
       <Content>
         {movies &&
           movies.map((movie, key) => (
-            <Wrap key={key}>
-              {movie.id}
-              <Link to={`/detail/` + movie.id}>
-                <img src={movie.cardImg} alt={movie.title} />
-              </Link>
-            </Wrap>
+            <Zoom bottom cascade>
+              <Wrap key={key}>
+                {movie.id}
+                <Link to={`/detail/` + movie.id}>
+                  <img src={movie.cardImg} alt={movie.title} />
+                </Link>
+              </Wrap>
+            </Zoom>
           ))}
       </Content>
     </Container>
