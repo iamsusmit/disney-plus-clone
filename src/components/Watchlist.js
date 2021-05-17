@@ -110,28 +110,28 @@ const Watchlist = (props) => {
         {filteredMovies.length > 0 ? (
           filteredMovies.map((item) =>
             item?.map((movie, key) => (
-              <Popover
-                content={
-                  <strong
-                    style={{ color: "blue", cursor: "pointer" }}
-                    onClick={removeItem}
-                    value={movie.title}
-                  >
-                    Remove
-                  </strong>
-                }
-                title="Want to remove from watchlist ?"
-                trigger="hover"
-              >
-                <Zoom bottom cascade>
+              <Zoom bottom>
+                <Popover
+                  content={
+                    <strong
+                      style={{ color: "blue", cursor: "pointer" }}
+                      onClick={removeItem}
+                      value={movie.title}
+                    >
+                      Remove
+                    </strong>
+                  }
+                  title="Want to remove from watchlist ?"
+                  trigger="hover"
+                >
                   <Wrap key={key}>
                     {movie.id}
                     <Link to={`/detail/` + movie.id}>
                       <img src={movie.cardImg} alt={movie.title} />
                     </Link>
                   </Wrap>
-                </Zoom>
-              </Popover>
+                </Popover>
+              </Zoom>
             ))
           )
         ) : filteredMovies.length <= 0 || content == 1 ? (
