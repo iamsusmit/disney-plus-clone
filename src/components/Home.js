@@ -78,33 +78,61 @@ const Home = (props) => {
   const tourConfig = [
     {
       selector: '[data-tut="reactour__home"]',
-      content: `This is the home page.`
+      content: `This is the home page.`,
+      style: {
+        color: "black",
+        fontSize:"small"
+      }
     },
     {
       selector: '[data-tut="reactour__search"]',
-      content: `Search your movies from here.`
+      content: `Search your movies from here.`,
+      style: {
+        color: "black",
+        fontSize:"small"
+      }
     },
     {
       selector: '[data-tut="reactour__watchlist"]',
-      content: `Your favorite movies are kept here.`
+      content: `Your favorite movies are kept here.`,
+      style: {
+        color: "black",
+        fontSize:"small"
+      }
     },
     {
       selector: '[data-tut="reactour__original"]',
-      content: `Disney+ exclusive original contents are available here.`
+      content: `Disney+ exclusive original contents are available here.`,
+      style: {
+        color: "black",
+        fontSize:"small"
+      }
     },
     {
       selector: '[data-tut="reactour__movies"]',
       content: () => (
         <div>Unable to find your movies!!!<br />Look here for all movies.</div>
-      )
+      ),
+      style: {
+        color: "black",
+        fontSize:"small"
+      }
     },
     {
       selector: '[data-tut="reactour__series"]',
-      content: `This bucket is dedicated for series only.`
+      content: `This bucket is dedicated for series only.`,
+      style: {
+        color: "black",
+        fontSize:"small"
+      }
     },
     {
       selector: '[data-tut="reactour__viewers"]',
-      content: `Hover over each card to watch the trailer.`
+      content: `Hover over each card to watch the trailer.`,
+      style: {
+        color: "black",
+        fontSize:"small"
+      }
     },
     {
       selector: '[data-tut="reactour__signOut"]',
@@ -127,7 +155,11 @@ const Home = (props) => {
             Show Me Again
           </button>
         </div>
-      )
+      ),
+      style: {
+        color: "black",
+        fontSize:"small"
+      }
     },
   ];
 
