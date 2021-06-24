@@ -121,12 +121,13 @@ const Detail = (props) => {
             <span>Trailer</span>
           </Trailer>
           {list == false ? (
-            <AddList onClick={() => addToWatchlist()}>
+            <AddList title={`Add to your watchlist`} onClick={() => addToWatchlist()}>
               <span />
               <span />
             </AddList>
           ) : (
             <AddList
+              title={`Remove from your watchlist`}
               style={{ fontSize: "200%" }}
               onClick={() => removeFromWatchlist()}
             >

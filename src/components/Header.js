@@ -86,15 +86,15 @@ const Header = (props) => {
       ) : (
         <>
           <NavMenu>
-            <a href="/home">
+            <a href="/home" data-tut="reactour__home">
               <img src="/images/home-icon.svg" alt="HOME" />
               <span>HOME</span>
             </a>
-            <a href="/search">
+            <a href="/search" data-tut="reactour__search">
               <img src="/images/search-icon.svg" alt="SEARCH" />
               <span>SEARCH</span>
             </a>
-            <a href="/watchlist">
+            <a href="/watchlist" data-tut="reactour__watchlist">
               <img src="/images/watchlist-icon.svg" alt="WATCHLIST" />
               <span>
                 WATCHLIST{" "}
@@ -103,20 +103,20 @@ const Header = (props) => {
                 )}
               </span>
             </a>
-            <a href="/originals">
+            <a href="/originals" data-tut="reactour__original">
               <img src="/images/original-icon.svg" alt="ORIGINALS" />
               <span>ORIGINALS</span>
             </a>
-            <a href="/movies">
+            <a href="/movies" data-tut="reactour__movies">
               <img src="/images/movie-icon.svg" alt="MOVIES" />
               <span>MOVIES</span>
             </a>
-            <a href="/series">
+            <a href="/series" data-tut="reactour__series">
               <img src="/images/series-icon.svg" alt="SERIES" />
               <span>SERIES</span>
             </a>
           </NavMenu>
-          <SignOut>
+          <SignOut data-tut="reactour__signOut">
             <UserImg src={userPhoto} alt={userName} />
             <DropDown>
               <span onClick={handleAuth} style={{ color: "white" }}>
