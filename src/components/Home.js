@@ -81,7 +81,7 @@ const Home = (props) => {
       content: `This is the home page.`,
       style: {
         color: "black",
-        fontSize:"small"
+        fontSize: "small"
       }
     },
     {
@@ -89,7 +89,7 @@ const Home = (props) => {
       content: `Search your movies from here.`,
       style: {
         color: "black",
-        fontSize:"small"
+        fontSize: "small"
       }
     },
     {
@@ -97,7 +97,7 @@ const Home = (props) => {
       content: `Your favorite movies are kept here.`,
       style: {
         color: "black",
-        fontSize:"small"
+        fontSize: "small"
       }
     },
     {
@@ -105,7 +105,7 @@ const Home = (props) => {
       content: `Disney+ exclusive original contents are available here.`,
       style: {
         color: "black",
-        fontSize:"small"
+        fontSize: "small"
       }
     },
     {
@@ -115,7 +115,7 @@ const Home = (props) => {
       ),
       style: {
         color: "black",
-        fontSize:"small"
+        fontSize: "small"
       }
     },
     {
@@ -123,7 +123,7 @@ const Home = (props) => {
       content: `This bucket is dedicated for series only.`,
       style: {
         color: "black",
-        fontSize:"small"
+        fontSize: "small"
       }
     },
     {
@@ -131,7 +131,7 @@ const Home = (props) => {
       content: `Hover over each card to watch the trailer.`,
       style: {
         color: "black",
-        fontSize:"small"
+        fontSize: "small"
       }
     },
     {
@@ -154,11 +154,26 @@ const Home = (props) => {
           >
             Show Me Again
           </button>
+          <button
+            style={{
+              border: "1px solid #f7f7f7",
+              background: "#1890ff",
+              color: "#fff",
+              padding: ".3em .7em",
+              fontSize: "inherit",
+              display: "block",
+              cursor: "pointer",
+              margin: "1em auto"
+            }}
+            onClick={() => setIsTourOpen(false)}
+          >
+            Close
+          </button>
         </div>
       ),
       style: {
         color: "black",
-        fontSize:"small"
+        fontSize: "small"
       }
     },
   ];
