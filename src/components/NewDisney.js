@@ -2,17 +2,21 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectNewDisney } from "../features/movie/movieSlice";
+import { currentModeValue } from "../features/watchlist/watchlistSlice";
 import Zoom from "react-reveal/Zoom";
 import LightSpeed from "react-reveal/LightSpeed";
 
 const NewDisney = (props) => {
   const movies = useSelector(selectNewDisney);
+  const mode = useSelector(currentModeValue);
 
   return (
     <Container>
       {props.title && (
         <LightSpeed left cascade>
-          <h4 style={{ color: "white", fontSize: "150%" }}>New to Disney+</h4>
+          <h4 style={{ color: mode ? "black" : "white", fontSize: "150%" }}>
+            New to Disney+
+          </h4>
         </LightSpeed>
       )}
       <Content>

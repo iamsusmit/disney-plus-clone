@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import db from "../firebase";
 import { setMovies } from "../features/movie/movieSlice";
+import { currentModeValue } from "../features/watchlist/watchlistSlice";
 import { lazy, Suspense, useEffect } from "react";
 import { Spin } from "antd";
 import "antd/dist/antd.css";
@@ -14,6 +15,7 @@ const Trending = lazy(() => import("./Trending"));
 
 function Movies() {
   const dispatch = useDispatch();
+  const mode = useSelector(currentModeValue);
   let recommends = [];
   let newDisneys = [];
   let originals = [];
@@ -54,7 +56,7 @@ function Movies() {
   }, []);
 
   return (
-    <Container>
+    <Container mode={mode}>
       <Suspense
         fallback={
           <Loading>
@@ -78,15 +80,18 @@ const Container = styled.main`
   top: 70px;
   padding: 75px calc(3.5vw + 5px);
 
-  &:after {
-    background: url("/images/home-background.png") center center / cover
-      no-repeat fixed;
-    content: "";
-    position: absolute;
-    inset: 0px;
-    opacity: 1;
-    z-index: -1;
-  }
+  ${(props) =>
+    !props.mode
+      ? `  &:after {
+        background: url("/images/home-background.png") center center / cover
+          no-repeat fixed;
+        content: "";
+        position: absolute;
+        inset: 0px;
+        opacity: 1;
+        z-index: -1;
+      }`
+      : `background-image: linear-gradient(rgba(131, 124, 124,0),rgba(214, 202, 202,1));`}
 `;
 const Loading = styled.div`
 margin: 200px 0;

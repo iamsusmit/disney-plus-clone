@@ -2,8 +2,12 @@ import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import { useSelector } from "react-redux";
+import { currentModeValue } from "../features/watchlist/watchlistSlice";
 
 const ImgSlider = (props) => {
+  const mode = useSelector(currentModeValue);
+
   let settings = {
     dots: true,
     infinite: true,
@@ -13,7 +17,7 @@ const ImgSlider = (props) => {
     autoplay: true,
   };
   return (
-    <Carousel {...settings}>
+    <Carousel mode={mode} {...settings}>
       <Wrap>
         <a>
           <img src="/images/slider-badging.jpg" alt="" />
@@ -64,7 +68,7 @@ const Carousel = styled(Slider)`
   }
 
   li.slick-active button:before {
-    color: white;
+    color: ${(props) => (props.mode ? `black` : `white`)};
   }
 
   .slick-list {

@@ -14,6 +14,8 @@ import {
   tValue,
   currentBackButtonValue,
   currentWatchlistValue,
+  settoggleMode,
+  currentModeValue,
 } from "../features/watchlist/watchlistSlice";
 
 const Header = (props) => {
@@ -26,6 +28,7 @@ const Header = (props) => {
   const toggle = useSelector(tValue);
   const backButtonStatus = useSelector(currentBackButtonValue);
   const currentWlValue = useSelector(currentWatchlistValue); //for reflecting the realtime watchlist value while going back from the browser
+  const mode = useSelector(currentModeValue);
 
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
@@ -49,6 +52,12 @@ const Header = (props) => {
         .then((result) => {
           setUser(result.user);
           history.push("/home");
+          sessionStorage.setItem("isLoggedIn", "true");
+          dispatch(
+            settoggleMode({
+              toggleMode: false,
+            })
+          );
         })
         .catch((error) => {
           alert(error.message);
@@ -60,6 +69,11 @@ const Header = (props) => {
           dispatch(setSignOutState());
           history.push("/");
           sessionStorage.clear();
+          dispatch(
+            settoggleMode({
+              toggleMode: false,
+            })
+          );
         })
         .catch((err) => alert(err.message));
     }
@@ -75,8 +89,25 @@ const Header = (props) => {
     );
   };
 
+  const toggleMode = (e) => {
+    let currentMode = e.target.innerText;
+    if (currentMode == "Light Mode") {
+      dispatch(
+        settoggleMode({
+          toggleMode: true,
+        })
+      );
+    } else if (currentMode == "Dark Mode") {
+      dispatch(
+        settoggleMode({
+          toggleMode: false,
+        })
+      );
+    }
+  };
+
   return (
-    <Nav>
+    <Nav mode={mode}>
       <Logo>
         <img src="/images/logo.svg" alt="Disney+" />
       </Logo>
@@ -120,7 +151,11 @@ const Header = (props) => {
             <UserImg src={userPhoto} alt={userName} />
             <DropDown>
               <span onClick={handleAuth} style={{ color: "white" }}>
-                Sign out
+                Sign Out
+              </span>
+              <hr style={{ width: "100%" }} />
+              <span onClick={toggleMode} style={{ color: "white" }}>
+                {mode ? "Dark Mode" : "Light Mode"}
               </span>
             </DropDown>
           </SignOut>
@@ -137,6 +172,9 @@ const Nav = styled.nav`
   right: 0;
   height: 70px;
   background-color: #090b13;
+  background-image: ${(props) =>
+    props.mode &&
+    `linear-gradient(rgba(131, 124, 124,0),rgba(214, 202, 202,1));`};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -313,8 +351,10 @@ const DropDown = styled.div`
   padding: 10px;
   font-size: 14px;
   letter-spacing: 3px;
-  width: 100px;
+  width: 125px;
   opacity: 0;
+  display: flex;
+  flex-direction: column;
 `;
 
 const SignOut = styled.div`

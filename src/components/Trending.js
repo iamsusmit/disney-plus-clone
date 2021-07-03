@@ -2,17 +2,21 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectTrending } from "../features/movie/movieSlice";
+import { currentModeValue } from "../features/watchlist/watchlistSlice";
 import Zoom from "react-reveal/Zoom";
 import LightSpeed from "react-reveal/LightSpeed";
 
 const Trending = (props) => {
   const movies = useSelector(selectTrending);
+  const mode = useSelector(currentModeValue);
 
   return (
     <Container>
       {props.title && (
         <LightSpeed left cascade>
-          <h4 style={{ color: "white", fontSize: "150%" }}>Trending</h4>
+          <h4 style={{ color: mode ? "black" : "white", fontSize: "150%" }}>
+            Trending
+          </h4>
         </LightSpeed>
       )}
       <Content>

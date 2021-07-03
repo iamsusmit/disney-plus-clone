@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import db from "../firebase";
 import { setMovies } from "../features/movie/movieSlice";
 import { selectUserName } from "../features/user/userSlice";
+import { currentModeValue } from "../features/watchlist/watchlistSlice";
 import { Spin, Modal, message } from "antd";
 import "antd/dist/antd.css";
 import Tour from "reactour";
@@ -25,9 +26,12 @@ const Home = (props) => {
   let trending = [];
 
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const mode = useSelector(currentModeValue);
 
   useEffect(() => {
-    sessionStorage.getItem("isTourVisited") === "true" ? setIsModalVisible(false) : setIsModalVisible(true);
+    sessionStorage.getItem("isTourVisited") === "true"
+      ? setIsModalVisible(false)
+      : setIsModalVisible(true);
     document.title = "Disney+ Clone";
     db.collection("movies").onSnapshot((snapshot) => {
       snapshot.docs.map((doc) => {
@@ -61,7 +65,6 @@ const Home = (props) => {
     });
   }, [userName]);
 
-
   const handleOk = () => {
     setIsModalVisible(false);
     setIsTourOpen(true);
@@ -71,9 +74,8 @@ const Home = (props) => {
   const handleCancel = () => {
     setIsModalVisible(false);
     sessionStorage.setItem("isTourVisited", "true");
-    message.success('Alright! Happy Exploring.');
+    message.success("Alright! Happy Exploring.");
   };
-
 
   const tourConfig = [
     {
@@ -81,64 +83,68 @@ const Home = (props) => {
       content: `This is the home page.`,
       style: {
         color: "black",
-        fontSize: "small"
-      }
+        fontSize: "small",
+      },
     },
     {
       selector: '[data-tut="reactour__search"]',
       content: `Search your movies from here.`,
       style: {
         color: "black",
-        fontSize: "small"
-      }
+        fontSize: "small",
+      },
     },
     {
       selector: '[data-tut="reactour__watchlist"]',
       content: `Your favorite movies are kept here.`,
       style: {
         color: "black",
-        fontSize: "small"
-      }
+        fontSize: "small",
+      },
     },
     {
       selector: '[data-tut="reactour__original"]',
       content: `Disney+ exclusive original contents are available here.`,
       style: {
         color: "black",
-        fontSize: "small"
-      }
+        fontSize: "small",
+      },
     },
     {
       selector: '[data-tut="reactour__movies"]',
       content: () => (
-        <div>Unable to find your movies!!!<br />Look here for all movies.</div>
+        <div>
+          Unable to find your movies!!!
+          <br />
+          Look here for all movies.
+        </div>
       ),
       style: {
         color: "black",
-        fontSize: "small"
-      }
+        fontSize: "small",
+      },
     },
     {
       selector: '[data-tut="reactour__series"]',
       content: `This bucket is dedicated for series only.`,
       style: {
         color: "black",
-        fontSize: "small"
-      }
+        fontSize: "small",
+      },
     },
     {
       selector: '[data-tut="reactour__viewers"]',
       content: `Hover over each card to watch the trailer.`,
       style: {
         color: "black",
-        fontSize: "small"
-      }
+        fontSize: "small",
+      },
     },
     {
       selector: '[data-tut="reactour__signOut"]',
       content: ({ goTo }) => (
         <div>
-          Hover over your profile to sign out.{" "}
+          Hover over your profile to sign out or to change view.{" "}
           <button
             style={{
               border: "1px solid #f7f7f7",
@@ -148,7 +154,7 @@ const Home = (props) => {
               fontSize: "inherit",
               display: "block",
               cursor: "pointer",
-              margin: "1em auto"
+              margin: "1em auto",
             }}
             onClick={() => goTo(0)}
           >
@@ -163,7 +169,7 @@ const Home = (props) => {
               fontSize: "inherit",
               display: "block",
               cursor: "pointer",
-              margin: "1em auto"
+              margin: "1em auto",
             }}
             onClick={() => setIsTourOpen(false)}
           >
@@ -173,14 +179,13 @@ const Home = (props) => {
       ),
       style: {
         color: "black",
-        fontSize: "small"
-      }
+        fontSize: "small",
+      },
     },
   ];
 
-
   return (
-    <Container>
+    <Container mode={mode}>
       <ImgSlider />
       <Viewers />
       <Recommends title />
@@ -199,12 +204,21 @@ const Home = (props) => {
         steps={tourConfig}
         isOpen={isTourOpen}
         onRequestClose={() => setIsTourOpen(false)}
-        rounded={5}//rounded border radius  
+        rounded={5} //rounded border radius
       />
-      <Modal title="Tour Advisory" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+      <Modal
+        title="Tour Advisory"
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
         <p>Do you want to take a tour of the application?</p>
-        <i><strong>Note:-</strong></i>
-        <small>If you cancel then you have to login again to view the Tour Advisory.</small>
+        <i>
+          <strong>Note:-</strong>
+        </i>
+        <small>
+          If you cancel then you have to login again to view the Tour Advisory.
+        </small>
       </Modal>
     </Container>
   );
@@ -218,7 +232,9 @@ const Container = styled.main`
   top: 70px;
   padding: 0 calc(3.5vw + 5px);
 
-  &:after {
+  ${(props) =>
+    !props.mode
+      ? `  &:after {
     background: url("/images/home-background.png") center center / cover
       no-repeat fixed;
     content: "";
@@ -226,7 +242,8 @@ const Container = styled.main`
     inset: 0px;
     opacity: 1;
     z-index: -1;
-  }
+  }`
+      : `background-image: linear-gradient(rgba(131, 124, 124,0),rgba(214, 202, 202,1));`}
 `;
 const Loading = styled.div`
 margin: 200px 0;

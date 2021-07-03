@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectAll } from "../features/movie/movieSlice";
 import db from "../firebase";
 import { setMovies } from "../features/movie/movieSlice";
+import { currentModeValue } from "../features/watchlist/watchlistSlice";
 import { useState, useEffect } from "react";
 import { Result, Button } from "antd";
 import { Input, Space } from "antd";
@@ -15,6 +16,7 @@ const { Search } = Input;
 
 const SearchMovies = (props) => {
   const movies = useSelector(selectAll);
+  const mode = useSelector(currentModeValue);
   const dispatch = useDispatch();
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [isMoviePresent, setIsMoviePresent] = useState(false);
@@ -56,7 +58,7 @@ const SearchMovies = (props) => {
   }, []);
 
   return (
-    <Container>
+    <Container mode={mode}>
       <Space direction="vertical">
         <Search
           placeholder="Enter the movie name"
@@ -117,15 +119,18 @@ const Container = styled.main`
     min-height: 87.5vh;
   }
 
-  &:after {
-    background: url("/images/home-background.png") center center / cover
-      no-repeat fixed;
-    content: "";
-    position: absolute;
-    inset: 0px;
-    opacity: 1;
-    z-index: -1;
-  }
+  ${(props) =>
+    !props.mode
+      ? `  &:after {
+        background: url("/images/home-background.png") center center / cover
+          no-repeat fixed;
+        content: "";
+        position: absolute;
+        inset: 0px;
+        opacity: 1;
+        z-index: -1;
+      }`
+      : `background-image: linear-gradient(rgba(131, 124, 124,0),rgba(214, 202, 202,1));`}
 `;
 
 const Content = styled.div`

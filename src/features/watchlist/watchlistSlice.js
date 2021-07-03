@@ -5,6 +5,7 @@ const initialState = {
   toggle: 0,
   backButtonValue: 0,
   watchlistValue: 0,
+  toggleMode: Boolean,
 };
 
 const watchlistSlice = createSlice({
@@ -30,6 +31,10 @@ const watchlistSlice = createSlice({
     setWatchlistValue: (state, action) => {
       state.watchlistValue = action.payload.watchlistValue;
     },
+
+    settoggleMode: (state, action) => {
+      state.toggleMode = action.payload.toggleMode;
+    },
   },
 });
 
@@ -39,11 +44,13 @@ export const {
   setToggleValue,
   setBackButtonValue,
   setWatchlistValue,
+  settoggleMode,
 } = watchlistSlice.actions;
 
 export const currentWatchlistStatus = (state) => state?.watch?.watchlist;
 export const tValue = (state) => state?.watch?.toggle;
 export const currentBackButtonValue = (state) => state?.watch?.backButtonValue;
 export const currentWatchlistValue = (state) => state?.watch?.watchlistValue;
+export const currentModeValue = (state) => state?.watch?.toggleMode;
 
 export default watchlistSlice.reducer;

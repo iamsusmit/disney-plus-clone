@@ -9,6 +9,7 @@ import {
   removeWatchlist,
   setToggleValue,
   setWatchlistValue,
+  currentModeValue,
 } from "../features/watchlist/watchlistSlice";
 import { useState, useEffect } from "react";
 import { Result, Button, Popover, message, Alert } from "antd";
@@ -19,6 +20,7 @@ import Zoom from "react-reveal/Zoom";
 const Watchlist = (props) => {
   const movies = useSelector(selectAll);
   const status = useSelector(currentWatchlistStatus);
+  const mode = useSelector(currentModeValue);
   const dispatch = useDispatch();
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [tracker, setTracker] = useState();
@@ -94,7 +96,7 @@ const Watchlist = (props) => {
   };
 
   return (
-    <Container>
+    <Container mode={mode}>
       {filteredMovies.length > 0 && (
         <Alert
           message="Tips"
@@ -136,7 +138,6 @@ const Watchlist = (props) => {
           )
         ) : filteredMovies.length <= 0 || content == 1 ? (
           <Result
-            className="error"
             status="403"
             title="403"
             subTitle="Sorry, your watchlist is empty."
@@ -180,15 +181,18 @@ const Container = styled.main`
     min-height: 87.5vh;
   }
 
-  &:after {
-    background: url("/images/home-background.png") center center / cover
-      no-repeat fixed;
-    content: "";
-    position: absolute;
-    inset: 0px;
-    opacity: 1;
-    z-index: -1;
-  }
+  ${(props) =>
+    !props.mode
+      ? `  &:after {
+        background: url("/images/home-background.png") center center / cover
+          no-repeat fixed;
+        content: "";
+        position: absolute;
+        inset: 0px;
+        opacity: 1;
+        z-index: -1;
+      }`
+      : `background-image: linear-gradient(rgba(131, 124, 124,0),rgba(214, 202, 202,1));`}
 `;
 
 const Content = styled.div`
