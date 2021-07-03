@@ -342,19 +342,39 @@ const UserImg = styled.img`
 
 const DropDown = styled.div`
   position: absolute;
-  top: 48px;
+  top: 25px;
   right: 0px;
   background: rgb(19, 19, 19);
   border: 1px solid rgba(151, 151, 151, 0.34);
   border-radius: 4px;
   box-shadow: rgb(0 0 0 / 50%) 0px 0px 18px 0px;
-  padding: 10px;
-  font-size: 14px;
+  padding: 3px;
+  font-size: 12px;
   letter-spacing: 3px;
-  width: 125px;
+  width: 100px;
   opacity: 0;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    right: -20px;
+  }
+
+  @media (min-width: 992px) {
+    right: 50px;
+    top: -10px;
+    padding: 3px;
+    font-size: 14px;
+    width: 110px;
+  }
+
+  span{
+    &:hover {
+      background-color: #1890ff;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+  }
 `;
 
 const SignOut = styled.div`
@@ -374,7 +394,7 @@ const SignOut = styled.div`
 
   &:hover {
     ${DropDown} {
-      opacity: 1;
+      opacity: 0.75;
       transition-duration: 1s;
     }
   }
