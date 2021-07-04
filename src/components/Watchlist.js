@@ -189,6 +189,10 @@ const Container = styled.main`
   @media (max-width: 768px) {
     min-height: 87.5vh;
     padding: 40px calc(3.5vw + 5px);
+    ${(props) =>
+      props.mode == "false"
+        ? `background-color: #192133`
+        : `background-image: linear-gradient(rgba(131, 124, 124,0),rgba(214, 202, 202,1));`}
   }
 
   ${(props) =>

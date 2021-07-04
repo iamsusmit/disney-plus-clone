@@ -250,6 +250,13 @@ const Container = styled.main`
   top: 70px;
   padding: 0 calc(3.5vw + 5px);
 
+  @media (max-width: 768px) {
+    ${(props) =>
+      props.mode == "false"
+        ? `background-color: #192133`
+        : `background-image: linear-gradient(rgba(131, 124, 124,0),rgba(214, 202, 202,1));`}
+  }
+
   ${(props) =>
     props.mode == "false"
       ? `  &:after {
