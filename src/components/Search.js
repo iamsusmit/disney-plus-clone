@@ -95,9 +95,9 @@ const SearchMovies = (props) => {
               title="404"
               subTitle="Sorry, the movie you are trying to search does not exist."
               extra={
-                <Button href="/home" type="primary">
-                  Back Home
-                </Button>
+                <Link to="/home">
+                  <Button type="primary">Back Home</Button>
+                </Link>
               }
             />
           </Zoom>
@@ -117,10 +117,11 @@ const Container = styled.main`
 
   @media (max-width: 768px) {
     min-height: 87.5vh;
+    padding: 10px calc(3.5vw + 5px);
   }
 
   ${(props) =>
-    !props.mode
+    props.mode == "false"
       ? `  &:after {
         background: url("/images/home-background.png") center center / cover
           no-repeat fixed;

@@ -14,7 +14,7 @@ const Originals = (props) => {
     <Container>
       {props.title && (
         <LightSpeed left cascade>
-          <h4 style={{ color: mode ? "black" : "white", fontSize: "150%" }}>
+          <h4 style={{ color: mode=="true" ? "black" : "white", fontSize: "150%" }}>
             Originals
           </h4>
         </LightSpeed>

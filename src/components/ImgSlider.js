@@ -68,7 +68,7 @@ const Carousel = styled(Slider)`
   }
 
   li.slick-active button:before {
-    color: ${(props) => (props.mode ? `black` : `white`)};
+    color: ${(props) => (props.mode=="true" ? `black` : `white`)};
   }
 
   .slick-list {

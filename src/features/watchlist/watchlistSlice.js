@@ -5,7 +5,7 @@ const initialState = {
   toggle: 0,
   backButtonValue: 0,
   watchlistValue: 0,
-  toggleMode: Boolean,
+  toggleMode: "false",
 };
 
 const watchlistSlice = createSlice({

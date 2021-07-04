@@ -79,6 +79,14 @@ const Home = (props) => {
 
   const tourConfig = [
     {
+      selector: '[data-tut="reactour__logo"]',
+      content: `This is Disney+ wikipedia. Click on it to get to know different interesting facts.`,
+      style: {
+        color: "black",
+        fontSize: "small",
+      },
+    },
+    {
       selector: '[data-tut="reactour__home"]',
       content: `This is the home page.`,
       style: {
@@ -233,7 +241,7 @@ const Container = styled.main`
   padding: 0 calc(3.5vw + 5px);
 
   ${(props) =>
-    !props.mode
+    props.mode == "false"
       ? `  &:after {
     background: url("/images/home-background.png") center center / cover
       no-repeat fixed;

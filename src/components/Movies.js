@@ -81,7 +81,7 @@ const Container = styled.main`
   padding: 75px calc(3.5vw + 5px);
 
   ${(props) =>
-    !props.mode
+    props.mode=="false"
       ? `  &:after {
         background: url("/images/home-background.png") center center / cover
           no-repeat fixed;

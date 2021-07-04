@@ -14,7 +14,7 @@ const Trending = (props) => {
     <Container>
       {props.title && (
         <LightSpeed left cascade>
-          <h4 style={{ color: mode ? "black" : "white", fontSize: "150%" }}>
+          <h4 style={{ color: mode=="true" ? "black" : "white", fontSize: "150%" }}>
             Trending
           </h4>
         </LightSpeed>

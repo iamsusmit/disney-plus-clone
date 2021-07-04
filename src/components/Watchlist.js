@@ -143,9 +143,9 @@ const Watchlist = (props) => {
             subTitle="Sorry, your watchlist is empty."
             style={{ paddingLeft: "35vw", margin: "auto" }}
             extra={
-              <Button className="watchlist__button" href="/home" type="primary">
-                Back Home
-              </Button>
+              <Link to="/home">
+                <Button type="primary">Back Home</Button>
+              </Link>
             }
           />
         ) : null}
@@ -179,10 +179,11 @@ const Container = styled.main`
 
   @media (max-width: 768px) {
     min-height: 87.5vh;
+    padding: 40px calc(3.5vw + 5px);
   }
 
   ${(props) =>
-    !props.mode
+    props.mode == "false"
       ? `  &:after {
         background: url("/images/home-background.png") center center / cover
           no-repeat fixed;

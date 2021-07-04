@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { Result, Button } from "antd";
 import { useSelector } from "react-redux";
 import { currentModeValue } from "../features/watchlist/watchlistSlice";
+import { Link } from "react-router-dom";
 
 function Series() {
   const mode = useSelector(currentModeValue);
@@ -19,9 +20,9 @@ function Series() {
         title="500"
         subTitle="Sorry, this section is under maintenance. Please visit after sometime."
         extra={
-          <Button href="/home" type="primary">
-            Back Home
-          </Button>
+          <Link to="/home">
+            <Button type="primary">Back Home</Button>
+          </Link>
         }
       />
     </Container>
@@ -36,7 +37,7 @@ const Container = styled.main`
   padding: 30px calc(3.5vw + 5px);
 
   ${(props) =>
-    !props.mode
+    props.mode == "false"
       ? `  &:after {
         background: url("/images/home-background.png") center center / cover
           no-repeat fixed;

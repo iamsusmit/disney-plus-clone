@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory,Link } from "react-router-dom";
 import { auth, provider } from "../firebase";
 import {
   selectUserName,
@@ -17,6 +17,9 @@ import {
   settoggleMode,
   currentModeValue,
 } from "../features/watchlist/watchlistSlice";
+import { notification } from "antd";
+import { SmileOutlined } from "@ant-design/icons";
+import "antd/dist/antd.css";
 
 const Header = (props) => {
   const dispatch = useDispatch();
@@ -55,7 +58,7 @@ const Header = (props) => {
           sessionStorage.setItem("isLoggedIn", "true");
           dispatch(
             settoggleMode({
-              toggleMode: false,
+              toggleMode: "false",
             })
           );
         })
@@ -69,9 +72,10 @@ const Header = (props) => {
           dispatch(setSignOutState());
           history.push("/");
           sessionStorage.clear();
+          document.title = "Disney+ Clone";
           dispatch(
             settoggleMode({
-              toggleMode: false,
+              toggleMode: "false",
             })
           );
         })
@@ -94,22 +98,47 @@ const Header = (props) => {
     if (currentMode == "Light Mode") {
       dispatch(
         settoggleMode({
-          toggleMode: true,
+          toggleMode: "true",
         })
       );
     } else if (currentMode == "Dark Mode") {
       dispatch(
         settoggleMode({
-          toggleMode: false,
+          toggleMode: "false",
         })
       );
     }
   };
 
+  const disneyWiki = () => {
+    let number = Math.floor(Math.random() * 10);
+    const wiki = [
+      "Disney+ was launched on November 12, 2019, in the United States, Canada, and the Netherlands, and expanded to Australia, New Zealand, and Puerto Rico a week later.",
+      "Ten million users had subscribed to Disney+ by the end of its first day of operation.",
+      "The service had 103 million global subscribers as of April 2021.",
+      "It became available in select European countries in March 2020 and in India in April through Star India's Hotstar streaming service, which was rebranded as Disney+ Hotstar.",
+      "It is suggested that Disney+ has approximately 7,000 television episodes and 500 films,[51] including original television series and films from Disney Channel and Freeform, and select titles from 20th Television and ABC Signature.",
+      "Disney+ is available for streaming via web browsers on PC and Mac, as well as apps on Apple iOS devices and Apple TV, Android mobile devices and Android TV, Amazon devices.",
+      "Disney+ allows seven user profiles per account, with the ability to stream on four devices concurrently and unlimited downloads for offline viewing.",
+      "Parent of this	OTT video streaming platform is Disney Media and Entertainment Distribution",
+      "Disney+ relies on technology developed by Disney Streaming Services, which was originally established as BAMTech in 2015 when it was spun off from MLB Advanced Media (MLBAM).",
+      "In the United States, Disney+ sits alongside Hulu and ESPN+ as Disney's three primary streaming platforms for the US market.",
+      "With BAMTech helping to launch ESPN+ in early 2018, and Disney's streaming distribution deal with Netflix ending in 2019, Disney took the opportunity to use technologies being developed for ESPN+ to establish a Disney-branded streaming service that would feature its content.",
+    ];
+    notification.open({
+      message: "Disney+ Wikipedia",
+      description: wiki[number],
+      placement:"topLeft",
+      top:80,
+      duration: 10,
+      icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+    });
+  };
+
   return (
     <Nav mode={mode}>
-      <Logo>
-        <img src="/images/logo.svg" alt="Disney+" />
+      <Logo data-tut="reactour__logo">
+        <img src="/images/logo.svg" alt="Disney+" onClick={disneyWiki} />
       </Logo>
 
       {!userName ? (
@@ -117,15 +146,15 @@ const Header = (props) => {
       ) : (
         <>
           <NavMenu>
-            <a href="/home" data-tut="reactour__home">
+            <Link to="/home" data-tut="reactour__home">
               <img src="/images/home-icon.svg" alt="HOME" />
               <span>HOME</span>
-            </a>
-            <a href="/search" data-tut="reactour__search">
+            </Link>
+            <Link to="/search" data-tut="reactour__search">
               <img src="/images/search-icon.svg" alt="SEARCH" />
               <span>SEARCH</span>
-            </a>
-            <a href="/watchlist" data-tut="reactour__watchlist">
+            </Link>
+            <Link to="/watchlist" data-tut="reactour__watchlist">
               <img src="/images/watchlist-icon.svg" alt="WATCHLIST" />
               <span>
                 WATCHLIST{" "}
@@ -133,19 +162,19 @@ const Header = (props) => {
                   <sup style={{ fontSize: "100%" }}>{watchlistCount}</sup>
                 )}
               </span>
-            </a>
-            <a href="/originals" data-tut="reactour__original">
+            </Link>
+            <Link to="/originals" data-tut="reactour__original">
               <img src="/images/original-icon.svg" alt="ORIGINALS" />
               <span>ORIGINALS</span>
-            </a>
-            <a href="/movies" data-tut="reactour__movies">
+            </Link>
+            <Link to="/movies" data-tut="reactour__movies">
               <img src="/images/movie-icon.svg" alt="MOVIES" />
               <span>MOVIES</span>
-            </a>
-            <a href="/series" data-tut="reactour__series">
+            </Link>
+            <Link to="/series" data-tut="reactour__series">
               <img src="/images/series-icon.svg" alt="SERIES" />
               <span>SERIES</span>
-            </a>
+            </Link>
           </NavMenu>
           <SignOut data-tut="reactour__signOut">
             <UserImg src={userPhoto} alt={userName} />
@@ -155,7 +184,7 @@ const Header = (props) => {
               </span>
               <hr style={{ width: "100%" }} />
               <span onClick={toggleMode} style={{ color: "white" }}>
-                {mode ? "Dark Mode" : "Light Mode"}
+                {mode=="false" ? "Light Mode" : "Dark Mode"}
               </span>
             </DropDown>
           </SignOut>
@@ -173,7 +202,7 @@ const Nav = styled.nav`
   height: 70px;
   background-color: #090b13;
   background-image: ${(props) =>
-    props.mode &&
+    props.mode=="true" &&
     `linear-gradient(rgba(131, 124, 124,0),rgba(214, 202, 202,1));`};
   display: flex;
   justify-content: space-between;
@@ -357,7 +386,11 @@ const DropDown = styled.div`
   flex-direction: column;
 
   @media (max-width: 768px) {
-    right: -20px;
+    right: -35px;
+    top: 50px;
+    padding: 1px;
+    font-size: 10px;
+    width: 90px;
   }
 
   @media (min-width: 992px) {
@@ -368,7 +401,7 @@ const DropDown = styled.div`
     width: 110px;
   }
 
-  span{
+  span {
     &:hover {
       background-color: #1890ff;
       cursor: pointer;
