@@ -5,6 +5,7 @@ import db from "../firebase";
 import { setMovies } from "../features/movie/movieSlice";
 import { currentModeValue } from "../features/watchlist/watchlistSlice";
 import { lazy, Suspense, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { Spin } from "antd";
 import "antd/dist/antd.css";
 
@@ -15,11 +16,20 @@ const Trending = lazy(() => import("./Trending"));
 
 function Movies() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const mode = useSelector(currentModeValue);
   let recommends = [];
   let newDisneys = [];
   let originals = [];
   let trending = [];
+
+  useEffect(() => {
+    const loggedIn = sessionStorage.getItem("isLoggedIn");
+    if (!loggedIn) {
+      history.push("/");
+      alert("Please login first!");
+    }
+  }, []);
 
   useEffect(() => {
     document.title = "Disney+ Clone | Movies";

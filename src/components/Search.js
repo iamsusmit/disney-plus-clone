@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectAll } from "../features/movie/movieSlice";
 import db from "../firebase";
@@ -18,6 +18,7 @@ const SearchMovies = (props) => {
   const movies = useSelector(selectAll);
   const mode = useSelector(currentModeValue);
   const dispatch = useDispatch();
+  const history = useHistory();
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [isMoviePresent, setIsMoviePresent] = useState(false);
 
@@ -55,6 +56,14 @@ const SearchMovies = (props) => {
         })
       );
     });
+  }, []);
+
+  useEffect(() => {
+    const loggedIn = sessionStorage.getItem("isLoggedIn");
+    if (!loggedIn) {
+      history.push("/");
+      alert("Please login first!");
+    }
   }, []);
 
   return (

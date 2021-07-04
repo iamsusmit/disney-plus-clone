@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import db from "../firebase";
 import { message } from "antd";
@@ -20,6 +20,7 @@ const Detail = (props) => {
   const [isPresent, setIsPresent] = useState(false);
   const [list, setList] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     db.collection("movies")
@@ -36,6 +37,14 @@ const Detail = (props) => {
         console.log("Error getting document:", error);
       });
   }, [id]);
+
+  useEffect(() => {
+    const loggedIn = sessionStorage.getItem("isLoggedIn");
+    if (!loggedIn) {
+      history.push("/");
+      alert("Please login first!");
+    }
+  }, []);
 
   useEffect(() => {
     document.title = detailData.title
@@ -121,7 +130,10 @@ const Detail = (props) => {
             <span>Trailer</span>
           </Trailer>
           {list == false ? (
-            <AddList title={`Add to your watchlist`} onClick={() => addToWatchlist()}>
+            <AddList
+              title={`Add to your watchlist`}
+              onClick={() => addToWatchlist()}
+            >
               <span />
               <span />
             </AddList>

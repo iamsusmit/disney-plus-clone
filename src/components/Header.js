@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory,Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { auth, provider } from "../firebase";
 import {
   selectUserName,
@@ -109,30 +109,39 @@ const Header = (props) => {
       );
     }
   };
-
   const disneyWiki = () => {
-    let number = Math.floor(Math.random() * 10);
-    const wiki = [
-      "Disney+ was launched on November 12, 2019, in the United States, Canada, and the Netherlands, and expanded to Australia, New Zealand, and Puerto Rico a week later.",
-      "Ten million users had subscribed to Disney+ by the end of its first day of operation.",
-      "The service had 103 million global subscribers as of April 2021.",
-      "It became available in select European countries in March 2020 and in India in April through Star India's Hotstar streaming service, which was rebranded as Disney+ Hotstar.",
-      "It is suggested that Disney+ has approximately 7,000 television episodes and 500 films,[51] including original television series and films from Disney Channel and Freeform, and select titles from 20th Television and ABC Signature.",
-      "Disney+ is available for streaming via web browsers on PC and Mac, as well as apps on Apple iOS devices and Apple TV, Android mobile devices and Android TV, Amazon devices.",
-      "Disney+ allows seven user profiles per account, with the ability to stream on four devices concurrently and unlimited downloads for offline viewing.",
-      "Parent of this	OTT video streaming platform is Disney Media and Entertainment Distribution",
-      "Disney+ relies on technology developed by Disney Streaming Services, which was originally established as BAMTech in 2015 when it was spun off from MLB Advanced Media (MLBAM).",
-      "In the United States, Disney+ sits alongside Hulu and ESPN+ as Disney's three primary streaming platforms for the US market.",
-      "With BAMTech helping to launch ESPN+ in early 2018, and Disney's streaming distribution deal with Netflix ending in 2019, Disney took the opportunity to use technologies being developed for ESPN+ to establish a Disney-branded streaming service that would feature its content.",
-    ];
-    notification.open({
-      message: "Disney+ Wikipedia",
-      description: wiki[number],
-      placement:"topLeft",
-      top:80,
-      duration: 10,
-      icon: <SmileOutlined style={{ color: "#108ee9" }} />,
-    });
+    if (userName && userName!="") {
+      let number = Math.floor(Math.random() * 10);
+      const wiki = [
+        "Disney+ was launched on November 12, 2019, in the United States, Canada, and the Netherlands, and expanded to Australia, New Zealand, and Puerto Rico a week later.",
+        "Ten million users had subscribed to Disney+ by the end of its first day of operation.",
+        "The service had 103 million global subscribers as of April 2021.",
+        "It became available in select European countries in March 2020 and in India in April through Star India's Hotstar streaming service, which was rebranded as Disney+ Hotstar.",
+        "It is suggested that Disney+ has approximately 7,000 television episodes and 500 films,[51] including original television series and films from Disney Channel and Freeform, and select titles from 20th Television and ABC Signature.",
+        "Disney+ is available for streaming via web browsers on PC and Mac, as well as apps on Apple iOS devices and Apple TV, Android mobile devices and Android TV, Amazon devices.",
+        "Disney+ allows seven user profiles per account, with the ability to stream on four devices concurrently and unlimited downloads for offline viewing.",
+        "Parent of this	OTT video streaming platform is Disney Media and Entertainment Distribution",
+        "Disney+ relies on technology developed by Disney Streaming Services, which was originally established as BAMTech in 2015 when it was spun off from MLB Advanced Media (MLBAM).",
+        "In the United States, Disney+ sits alongside Hulu and ESPN+ as Disney's three primary streaming platforms for the US market.",
+        "With BAMTech helping to launch ESPN+ in early 2018, and Disney's streaming distribution deal with Netflix ending in 2019, Disney took the opportunity to use technologies being developed for ESPN+ to establish a Disney-branded streaming service that would feature its content.",
+      ];
+      notification.open({
+        message: "Disney+ Wikipedia",
+        description: wiki[number],
+        placement: "topLeft",
+        top: 80,
+        duration: 10,
+        icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+      });
+    } else {
+      notification.open({
+        message: "Disney+",
+        description: "Hey,there! Please login to experience most of it.",
+        placement: "topLeft",
+        top: 80,
+        icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+      });
+    }
   };
 
   return (
@@ -184,7 +193,7 @@ const Header = (props) => {
               </span>
               <hr style={{ width: "100%" }} />
               <span onClick={toggleMode} style={{ color: "white" }}>
-                {mode=="false" ? "Light Mode" : "Dark Mode"}
+                {mode == "false" ? "Light Mode" : "Dark Mode"}
               </span>
             </DropDown>
           </SignOut>
@@ -202,7 +211,7 @@ const Nav = styled.nav`
   height: 70px;
   background-color: #090b13;
   background-image: ${(props) =>
-    props.mode=="true" &&
+    props.mode == "true" &&
     `linear-gradient(rgba(131, 124, 124,0),rgba(214, 202, 202,1));`};
   display: flex;
   justify-content: space-between;

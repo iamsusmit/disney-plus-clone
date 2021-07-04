@@ -4,13 +4,19 @@ import { useEffect } from "react";
 import { Result, Button } from "antd";
 import { useSelector } from "react-redux";
 import { currentModeValue } from "../features/watchlist/watchlistSlice";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 function Series() {
   const mode = useSelector(currentModeValue);
+  const history = useHistory();
 
   useEffect(() => {
     document.title = "Disney+ Clone | Series";
+    const loggedIn = sessionStorage.getItem("isLoggedIn");
+    if (!loggedIn) {
+      history.push("/");
+      alert("Please login first!");
+    }
   }, []);
 
   return (

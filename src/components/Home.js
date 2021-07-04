@@ -11,6 +11,7 @@ import { currentModeValue } from "../features/watchlist/watchlistSlice";
 import { Spin, Modal, message } from "antd";
 import "antd/dist/antd.css";
 import Tour from "reactour";
+import { useHistory } from "react-router-dom";
 
 const NewDisney = lazy(() => import("./NewDisney"));
 const Originals = lazy(() => import("./Originals"));
@@ -18,6 +19,7 @@ const Trending = lazy(() => import("./Trending"));
 
 const Home = (props) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const userName = useSelector(selectUserName);
   const [isTourOpen, setIsTourOpen] = useState(false);
   let recommends = [];
@@ -64,6 +66,14 @@ const Home = (props) => {
       );
     });
   }, [userName]);
+
+  useEffect(() => {
+    const loggedIn = sessionStorage.getItem("isLoggedIn");
+    if (!loggedIn && !userName) {
+      history.push("/");
+      alert("Please login first!");
+    }
+  }, []);
 
   const handleOk = () => {
     setIsModalVisible(false);

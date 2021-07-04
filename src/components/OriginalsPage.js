@@ -11,6 +11,7 @@ import "./OriginalsPage.css";
 
 import { Result, Statistic, Row, Col } from "antd";
 import { SmileOutlined } from "@ant-design/icons";
+import { useHistory } from "react-router-dom";
 
 const Originals = lazy(() => import("./Originals"));
 const { Countdown } = Statistic;
@@ -18,10 +19,19 @@ const deadline = Date.now() + 1000 * 60 * 60 * 12 + 1000 * 30; // Moment is also
 
 function OriginalsPage() {
   const mode = useSelector(currentModeValue);
+  const history = useHistory();
   const [hasCountdown, setHasCountdown] = useState(true);
   const [showCountdown, setShowCountdown] = useState(false);
   const dispatch = useDispatch();
   let originals = [];
+
+  useEffect(() => {
+    const loggedIn = sessionStorage.getItem("isLoggedIn");
+    if (!loggedIn) {
+      history.push("/");
+      alert("Please login first!");
+    }
+  }, []);
 
   useEffect(() => {
     document.title = "Disney+ Clone | Originals";
@@ -85,7 +95,7 @@ const Container = styled.main`
   padding: 20px calc(3.5vw + 5px);
 
   ${(props) =>
-    props.mode=="false"
+    props.mode == "false"
       ? `  &:after {
         background: url("/images/home-background.png") center center / cover
           no-repeat fixed;
