@@ -89,12 +89,12 @@ const Watchlist = (props) => {
       })
     );
     if (res?.length == 1) {
-      sessionStorage.clear();
+      sessionStorage.removeItem("movieList");
     }
   };
 
   const removeAll = () => {
-    sessionStorage.clear();
+    sessionStorage.removeItem("movieList");
     setIsRemoved(true);
     dispatch(
       setWatchlistValue({
