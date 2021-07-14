@@ -9,6 +9,7 @@ import Search from "./components/Search";
 import Watchlist from "./components/Watchlist";
 import OriginalsPage from "./components/OriginalsPage";
 import Series from "./components/Series";
+import NotFoundPage from "./components/NotFoundPage";
 
 function App() {
   return (
@@ -19,26 +20,29 @@ function App() {
           <Route exact path="/">
             <Login />
           </Route>
-          <Route path="/home">
+          <Route exact path="/home">
             <Home />
           </Route>
-          <Route path="/movies">
+          <Route exact path="/movies">
             <Movies />
           </Route>
-          <Route path="/search">
+          <Route exact path="/search">
             <Search />
           </Route>
-          <Route path="/watchlist">
+          <Route exact path="/watchlist">
             <Watchlist />
           </Route>
-          <Route path="/originals">
+          <Route exact path="/originals">
             <OriginalsPage />
           </Route>
-          <Route path="/series">
+          <Route exact path="/series">
             <Series />
           </Route>
-          <Route path="/detail/:id">
+          <Route exact path="/detail/:id">
             <Detail />
+          </Route>
+          <Route>
+            <NotFoundPage />
           </Route>
         </Switch>
       </Router>

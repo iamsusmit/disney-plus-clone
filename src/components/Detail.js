@@ -1,26 +1,29 @@
 import { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import styled from "styled-components";
 import db from "../firebase";
 import { message } from "antd";
 import "antd/dist/antd.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setWatchlist,
   removeWatchlist,
   setBackButtonValue,
   setWatchlistValue,
+  currentModeValue,
 } from "../features/watchlist/watchlistSlice";
-import { Popover, Button } from "antd";
+import { Popover, Button, Result } from "antd";
 import "antd/dist/antd.css";
 
 const Detail = (props) => {
   const { id } = useParams();
   const [detailData, setDetailData] = useState({});
   const [isPresent, setIsPresent] = useState(false);
+  const [showDetails, setShowDetails] = useState(true);
   const [list, setList] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
+  const mode = useSelector(currentModeValue);
 
   useEffect(() => {
     db.collection("movies")
@@ -29,8 +32,11 @@ const Detail = (props) => {
       .then((doc) => {
         if (doc.exists) {
           setDetailData(doc.data());
+          setShowDetails(true);
         } else {
           console.log("no such document in firebase 🔥");
+          setShowDetails(false);
+          document.title = "Disney+ Clone | Page not found";
         }
       })
       .catch((error) => {
@@ -111,69 +117,112 @@ const Detail = (props) => {
   };
 
   return (
-    <Container>
-      <Background>
-        <img alt={detailData.title} src={detailData.backgroundImg} />
-      </Background>
+    <Container mode={mode} showDetails={showDetails}>
+      {showDetails ? (
+        <>
+          <Background>
+            <img alt={detailData.title} src={detailData.backgroundImg} />
+          </Background>
 
-      <ImageTitle>
-        <img alt={detailData.title} src={detailData.titleImg} />
-      </ImageTitle>
-      <ContentMeta>
-        <Controls>
-          <Player onClick={() => alert("Exclusive for Premier users only!")}>
-            <img src="/images/play-icon-black.png" alt="" />
-            <span>Play</span>
-          </Player>
-          <Trailer onClick={handleTrailer}>
-            <img src="/images/play-icon-white.png" alt="" />
-            <span>Trailer</span>
-          </Trailer>
-          {list == false ? (
-            <AddList
-              title={`Add to your watchlist`}
-              onClick={() => addToWatchlist()}
-            >
-              <span />
-              <span />
-            </AddList>
-          ) : (
-            <AddList
-              title={`Remove from your watchlist`}
-              style={{ fontSize: "200%" }}
-              onClick={() => removeFromWatchlist()}
-            >
-              ✔
-            </AddList>
-          )}
-          <Popover
-            content={
-              <p style={{ color: "blue" }}>Available for VIP subscribers</p>
-            }
-            title="Group Watch"
-            trigger="click"
-          >
-            <GroupWatch>
-              <div>
-                <img src="/images/group-icon.png" alt="" />
-              </div>
-            </GroupWatch>
-          </Popover>
-        </Controls>
-        <SubTitle>{detailData.subTitle}</SubTitle>
-        <Description>{detailData.description}</Description>
-      </ContentMeta>
+          <ImageTitle>
+            <img alt={detailData.title} src={detailData.titleImg} />
+          </ImageTitle>
+          <ContentMeta>
+            <Controls>
+              <Player
+                onClick={() => alert("Exclusive for Premier users only!")}
+              >
+                <img src="/images/play-icon-black.png" alt="" />
+                <span>Play</span>
+              </Player>
+              <Trailer onClick={handleTrailer}>
+                <img src="/images/play-icon-white.png" alt="" />
+                <span>Trailer</span>
+              </Trailer>
+              {list == false ? (
+                <AddList
+                  title={`Add to your watchlist`}
+                  onClick={() => addToWatchlist()}
+                >
+                  <span />
+                  <span />
+                </AddList>
+              ) : (
+                <AddList
+                  title={`Remove from your watchlist`}
+                  style={{ fontSize: "200%" }}
+                  onClick={() => removeFromWatchlist()}
+                >
+                  ✔
+                </AddList>
+              )}
+              <Popover
+                content={
+                  <p style={{ color: "blue" }}>Available for VIP subscribers</p>
+                }
+                title="Group Watch"
+                trigger="click"
+              >
+                <GroupWatch>
+                  <div>
+                    <img src="/images/group-icon.png" alt="" />
+                  </div>
+                </GroupWatch>
+              </Popover>
+            </Controls>
+            <SubTitle>{detailData.subTitle}</SubTitle>
+            <Description>{detailData.description}</Description>
+          </ContentMeta>
+        </>
+      ) : (
+        <Result
+          status="404"
+          title="404"
+          subTitle="Sorry, the page you visited does not exist."
+          extra={
+            <Link to="/home">
+              <Button type="primary">Back Home</Button>
+            </Link>
+          }
+        />
+      )}
     </Container>
   );
 };
 
 const Container = styled.div`
   position: relative;
-  min-height: calc(100vh-250px);
+  min-height: calc(100vh);
   overflow-x: hidden;
   display: block;
-  top: 72px;
+  top: 70px;
   padding: 0 calc(3.5vw + 5px);
+
+  @media (max-width: 768px) {
+    min-height: 87.5vh;
+    padding: 10px calc(3.5vw + 5px);
+    ${(props) =>
+      !props.showDetails
+        ? props.mode == "false"
+          ? `background-color: #192133`
+          : `background-image: linear-gradient(rgba(131, 124, 124,0),rgba(214, 202, 202,1));`
+        : null}
+  }
+
+  ${(props) =>
+    !props.showDetails
+      ? props.mode == "false"
+        ? `  &:after {
+        background: url("/images/home-background.png") center center / cover
+          no-repeat fixed;
+        content: "";
+        position: absolute;
+        inset: 0px;
+        opacity: 1;
+        z-index: -1;
+      }`
+        : `background-image: linear-gradient(rgba(131, 124, 124,0),rgba(214, 202, 202,1));`
+      : null}
 `;
 
 const Background = styled.div`
